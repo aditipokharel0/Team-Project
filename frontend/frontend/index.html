@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuddersKart - Local Food Marketplace</title>
+    <!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+
+    <style> 
+        /* Banner */
+        .banner {
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .banner-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .banner-overlay h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .banner-overlay p {
+            font-size: 16px;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        
+        .banner-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .banner-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin: 40px 0 20px;
+        }
+        
+        .section-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .section-header p {
+            color: #777;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        
+        .shop-all-btn {
+            display: inline-block;
+            border: 1px solid #333;
+            padding: 8px 25px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s;
+        }
+        
+        .shop-all-btn:hover {
+            background-color: #333;
+            color: white;
+        }
+        
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .category-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 180px;
+            transition: transform 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .category-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        /* Products Section */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .product-price {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .add-to-cart {
+            background-color: #65bd0c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #65bd0c;
+        }
+        
+        /* Fresh Products Section */
+        .fresh-products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .fresh-product {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .fresh-product:hover {
+            transform: scale(1.03);
+        }
+        
+        .fresh-product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+       
+        /* Cart Sidebar Styles */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 100;
+            display: none;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 101;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-total {
+            font-weight: bold;
+            text-align: right;
+            margin: 20px 0;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+      
+    </style>
+</head>
+<body>
+    <!-- Header with Logo and Search -->
+    <header class="header">
+        <a href="/index.html" class="logo"><img src="images/logo.png" alt="HuddersKart Logo"></a>
+        
+        <div class="search-container">
+            <input type="text" placeholder="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+        <div class="user-actions">
+            <a href="/checkout.html">
+                <div class="cart-icon">
+                  <span>🛒</span>
+                  <span class="cart-count">0</span>
+                </div>
+              </a>
+              
+            <a href="/login.html">Login</a>
+            <a href="/register.html">Register</a>
+            <a href="/costumer.html">👤</a>
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="menu-toggle">☰</div>
+        <ul class="nav-links">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/categories.html">Categories</a></li>
+            <li><a href="#">Become a trader</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Banner Section -->
+        <div class="banner">
+            <img src="/images/456.png" alt="Fresh groceries" class="banner-image">
+            <div class="banner-overlay">
+                <h2>Fresh Groceries Delivered to Your Door</h2>
+                <p>Shop from our wide range of fresh fruits, vegetables, meat and more at the best prices.</p>
+                <button class="banner-btn">Shop Now</button>
+            </div>
+        </div>
+        
+        <!-- Categories Section -->
+        <section>
+            <div class="section-header">
+                <h2>Categories</h2>
+                <p>Our grocery store provides a complete selection of fresh produce, meats, dairy, bakery items, pantry staples, snacks, beverages, and frozen foods. We also offer household essentials, personal care items, baby and pet supplies, health products, and a variety of international foods to meet all your daily needs.</p>
+                <a href="#" class="shop-all-btn">Shop All</a>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <img src="/images/789.avif" alt="Food category" class="category-img">
+                    <div class="category-name">Food</div>
+                </div>
+                <div class="category-card">
+                    <img src="/images/meat.jpg" alt="Meat category" class="category-img">
+                    <div class="category-name">Meat</div>
+                </div>
+                <div class="category-card">
+                    <img src="/images/liquor.jpg" alt="Liquor category" class="category-img">
+                    <div class="category-name">Liquor</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Fresh Products Section -->
+        <section>
+            <div class="section-header">
+                <h2>Our Fresh Products</h2>
+                <p>A wide variety of farm-fresh fruits and vegetables, carefully selected for quality and freshness. Includes seasonal, organic, and locally-sourced options to keep your meals healthy and flavorful.</p>
+                <a href="#" class="shop-all-btn">Shop All</a>
+            </div>
+            
+            <div class="fresh-products">
+                <div class="fresh-product">
+                    <img src="/images/veg.avif" alt="Fresh vegetables" class="fresh-product-img">
+                </div>
+                <div class="fresh-product">
+                    <img src="/images/fruit.avif" alt="Fresh fruits" class="fresh-product-img">
+                </div>
+                <div class="fresh-product">
+                    <img src="/images/dairy.avif" alt="Fresh dairy" class="fresh-product-img">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Products Section -->
+        <section>
+            <div class="section-header">
+                <h2>Our Products</h2>
+                <p>A premium selection of organic vegetables, ethically-sourced organic meats, and freshly baked organic bread—grown and prepared without synthetic chemicals, ensuring pure, natural goodness in every bite.</p>
+                <a href="#" class="shop-all-btn">Products Details</a>
+            </div>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="/images/wheat.avif" alt="Bread" class="product-img">
+                    <div class="product-info">
+                        <div class="product-name">Whole Wheat Bread</div>
+                        <div class="product-price">$9.99</div>
+                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="/images/organic.avif" alt="Vegetables" class="product-img">
+                    <div class="product-info">
+                        <div class="product-name">Fresh Organic Vegetables</div>
+                        <div class="product-price">$5.99</div>
+                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="/images/beef.avif" alt="Meat" class="product-img">
+                    <div class="product-info">
+                        <div class="product-name">Premium Beef Steak</div>
+                        <div class="product-price">$19.99</div>
+                        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <div class="separator"></div>
+    <footer>
+        <div class="footer">
+            <div class="footer-section">
+                <div class="footer-logo"><img src="images/logo.png" alt="HuddersKart Logo" style="height: 40px;"></div>
+                <div class="footer-location">Hudderskart</div>
+                <div class="contact-info">
+                    <p><strong>Contact Information</strong></p>
+                    <p>Email: HuddersKart12@gmail.com</p>
+                    <p>Phone: 01555321</p>
+                    <p>Address: Duarbarmarg, Kathmandu</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>LINKS</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Cart</a></li>
+                    <li><a href="#">Login/Register</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Trader</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Return & Refund Policy</a></li>
+                    <li><a href="#">Shipping Information</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Social Media Links</h3>
+                <div class="social-media">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">x</a>
+                    <a href="#" class="social-icon">ig</a>
+                </div>
+
+                <h3 style="margin-top: 20px;">Payment Methods</h3>
+                <div class="payment-methods">
+                    <img src="/api/placeholder/90/35" alt="PayPal" class="payment-icon">
+                    <img src="/api/placeholder/90/35" alt="Stripe" class="payment-icon">
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2025 HUDDERSKART. ALL RIGHTS RESERVED
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+
+            // Category card click event
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    alert(`You clicked on ${category} category. This would navigate to the ${category} page.`);
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.querySelector('.search-container input');
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    alert(`Searching for: ${this.value}`);
+                    this.value = '';
+                }
+            });
+
+            // Cart functionality
+            const cartIcon = document.querySelector('.cart-icon');
+            const cartSidebar = document.querySelector('.cart-sidebar');
+            const cartOverlay = document.querySelector('.cart-overlay');
+            const closeCart = document.querySelector('.close-cart');
+            let cartCount = 0;
+            
+            function toggleCart() {
+                cartSidebar.classList.toggle('active');
+                cartOverlay.style.display = cartSidebar.classList.contains('active') ? 'block' : 'none';
+            }
+
+            cartIcon.addEventListener('click', toggleCart);
+            closeCart.addEventListener('click', toggleCart);
+            cartOverlay.addEventListener('click', toggleCart);
+
+            // Function to update cart count (would be called when items are added)
+            function updateCartCount(count) {
+                cartCount += count;
+                document.querySelector('.cart-count').textContent = cartCount;
+            }
+
+            // Dynamic window resize handling
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

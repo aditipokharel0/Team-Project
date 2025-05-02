@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuddersKart - Local Food Marketplace</title>
+    <!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+    <style>
+     
+         /* Main Content Styles */
+         .main-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .login-container {
+            background-color: #a6f575;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .welcome-text {
+            text-align: center;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .login-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fef8f8;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .forgot-password a {
+            color: #666;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+
+        .login-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #ff5a5a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .separator {
+            width: 90%;
+            margin: 20px auto;
+            border-top: 1px solid #e67e22;
+        }
+
+        .footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            background-color:  #b4ed91;
+            background-image: linear-gradient(to bottom, rgba(230, 126, 34, 0.1), rgba(243, 156, 18, 0.05));
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-logo {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #e67e22;
+        }
+
+        .footer-location {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #e67e22;
+        }
+
+        .contact-info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .contact-info p {
+            margin-bottom: 5px;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #65bd0c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.2s;
+        }
+
+        .social-icon:hover {
+            background-color: #d35400;
+            transform: scale(1.1);
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .payment-icon {
+            height: 30px;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .copyright {
+            background-color: #0f0e0e;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+        }
+
+        
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            .header {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            .search-container {
+                margin: 10px 0;
+                width: 100%;
+                max-width: 100%;
+
+
+            }
+            
+
+            .user-actions {
+                width: 100%;
+                justify-content: space-around;
+                margin-top: 10px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 0 10px;
+            }
+
+            .footer {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Hamburger Menu for Mobile */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                padding: 10px;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo and Search -->
+    <header class="header">
+        <a href="/index.html" class="logo"><img src="images/logo.png" alt="HuddersKart Logo"></a>
+        
+        <div class="search-container">
+            <input type="text" placeholder="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+        <div class="user-actions">
+            <div class="cart-icon">
+                <span>🛒</span>
+                <span class="cart-count">0</span>
+            </div>
+            <a href="/login.html">Login</a>
+            <a href="/register.html">Register</a>
+            <a href="/costumer.html">👤</a>
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="menu-toggle">☰</div>
+        <ul class="nav-links">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/categories.html">Categories</a></li>
+            <li><a href="#">Become a trader</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="login-container">
+            <p class="welcome-text">Welcome back !!!</p>
+            <h1 class="login-title">Login</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="" required>
+                    <div class="forgot-password">
+                        <a href="forgot-password.html">Forgot Password ?</a>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn">Login →</button>
+                <p class="signup-link">I don't have an account ? <a href="signup.html">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+    
+
+    
+
+    <!-- Footer -->
+    <div class="separator"></div>
+    <footer>
+        <div class="footer">
+            <div class="footer-section">
+                <div class="footer-logo"><img src="images/logo.png" alt="HuddersKart Logo" style="height: 40px;"></div>
+                <div class="footer-location">Hudderskart</div>
+                <div class="contact-info">
+                    <p><strong>Contact Information</strong></p>
+                    <p>Email: HuddersKart12@gmail.com</p>
+                    <p>Phone: 01555321</p>
+                    <p>Address: Duarbarmarg, Kathmandu</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>LINKS</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Cart</a></li>
+                    <li><a href="#">Login/Register</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Trader</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Return & Refund Policy</a></li>
+                    <li><a href="#">Shipping Information</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Social Media Links</h3>
+                <div class="social-media">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">x</a>
+                    <a href="#" class="social-icon">ig</a>
+                </div>
+
+                <h3 style="margin-top: 20px;">Payment Methods</h3>
+                <div class="payment-methods">
+                    <img src="/api/placeholder/90/35" alt="PayPal" class="payment-icon">
+                    <img src="/api/placeholder/90/35" alt="Stripe" class="payment-icon">
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2025 HUDDERSKART. ALL RIGHTS RESERVED
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+
+            // Category card click event
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    alert(`You clicked on ${category} category. This would navigate to the ${category} page.`);
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.querySelector('.search-container input');
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    alert(`Searching for: ${this.value}`);
+                    this.value = '';
+                }
+            });
+
+            // Cart functionality
+            const cartIcon = document.querySelector('.cart-icon');
+            const cartSidebar = document.querySelector('.cart-sidebar');
+            const cartOverlay = document.querySelector('.cart-overlay');
+            const closeCart = document.querySelector('.close-cart');
+            let cartCount = 0;
+            
+            function toggleCart() {
+                cartSidebar.classList.toggle('active');
+                cartOverlay.style.display = cartSidebar.classList.contains('active') ? 'block' : 'none';
+            }
+
+            cartIcon.addEventListener('click', toggleCart);
+            closeCart.addEventListener('click', toggleCart);
+            cartOverlay.addEventListener('click', toggleCart);
+
+            // Function to update cart count (would be called when items are added)
+            function updateCartCount(count) {
+                cartCount += count;
+                document.querySelector('.cart-count').textContent = cartCount;
+            }
+
+            // Dynamic window resize handling
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+
+        // Toggle mobile menu
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.getElementById('mainMenu').classList.toggle('active');
+        });
+
+        // Form validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if(email.trim() === '') {
+                alert('Please enter your email');
+                return;
+            }
+            
+            if(password.trim() === '') {
+                alert('Please enter your password');
+                return;
+            }
+            
+            // Here you would typically send the login data to your server
+            console.log('Login attempt with:', { email, password });
+            
+            // For demo purposes, show success message
+            alert('Login successful! Redirecting to dashboard...');
+            // Redirect would happen here in a real application
+        });
+
+        // Show password toggle functionality
+        function addPasswordToggle() {
+            const passwordField = document.getElementById('password');
+            const toggleButton = document.createElement('button');
+            toggleButton.type = 'button';
+            toggleButton.textContent = 'Show';
+            toggleButton.className = 'password-toggle';
+            toggleButton.style.position = 'absolute';
+            toggleButton.style.right = '20px';
+            toggleButton.style.top = '50%';
+            toggleButton.style.transform = 'translateY(-50%)';
+            toggleButton.style.background = 'none';
+            toggleButton.style.border = 'none';
+            toggleButton.style.cursor = 'pointer';
+            toggleButton.style.color = '#666';
+            
+            passwordField.parentElement.style.position = 'relative';
+            passwordField.parentElement.appendChild(toggleButton);
+            
+            toggleButton.addEventListener('click', function() {
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    toggleButton.textContent = 'Hide';
+                } else {
+                    passwordField.type = 'password';
+                    toggleButton.textContent = 'Show';
+                }
+            });
+        }
+        
+        // Initialize password toggle
+        window.addEventListener('DOMContentLoaded', function() {
+            addPasswordToggle();
+        });
+
+        // Make cart count dynamic
+        let cartCount = 0;
+        const cartIcon = document.querySelector('.cart-icon');
+        
+        function updateCartCount(count) {
+            cartCount = count;
+            cartIcon.textContent = cartCount;
+        }
+        
+        // Example function to add item to cart
+        function addToCart() {
+            updateCartCount(cartCount + 1);
+        }
+        
+        // For demonstration purposes
+        document.addEventListener('keydown', function(e) {
+            // Press 'c' key to simulate adding to cart
+            if (e.key === 'c') {
+                addToCart();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuddersKart - Butcher Products</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: #e3e3e3;
+            padding: 10px;
+            border-radius: 20px;
+            font-size: 24px;
+        }
+
+        .category-banner {
+            height: 250px;
+            background-image: url('https://images.unsplash.com/photo-1601642263169-e6159cd2320e?w=1200&auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .category-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            border-radius: 10px;
+        }
+        
+        .banner-title {
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .shop-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .filter-select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            background-color: #f5f5f5;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-details {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-vendor {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .product-actions {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .add-to-cart {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .add-to-cart:hover {
+            background-color: #3a7bc8;
+        }
+
+        .product-rating {
+            color: #f8ce0b;
+            font-size: 14px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .pagination button {
+            padding: 8px 15px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .pagination button.active {
+            background-color: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+        
+        .pagination button:hover:not(.active) {
+            background-color: #f5f5f5;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .shop-filters {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .filter-group {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .filter-select {
+                flex-grow: 1;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo and Search -->
+    <header class="header">
+        <a href="/index.html" class="logo"><img src="images/logo.png" alt="HuddersKart Logo"></a>
+        
+        <div class="search-container">
+            <input type="text" placeholder="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="user-actions">
+            <div class="cart-icon">
+                <span>🛒</span>
+                <span class="cart-count">0</span>
+            </div>
+            <a href="/login.html">Login</a>
+            <a href="/register.html">Register</a>
+            <a href="/costumer.html">👤</a>
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="menu-toggle">☰</div>
+        <ul class="nav-links">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/categories.html">Categories</a></li>
+            <li><a href="#">Become a trader</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="category-banner">
+            <h1 class="banner-title">Fishmonger</h1>
+        </div>
+
+        <!-- Shop Filters -->
+        <div class="shop-filters">
+            <div class="filter-group">
+                <label>Sort by:</label>
+                <select class="filter-select">
+                    <option>Featured</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Best Rating</option>
+                    <option>Newest</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label>Filter:</label>
+                <select class="filter-select">
+                    <option>All Products</option>
+                    <option>Beef</option>
+                    <option>Chicken</option>
+                    <option>Pork</option>
+                    <option>Lamb</option>
+                    <option>Sausages</option>
+                </select>
+                
+                <select class="filter-select">
+                    <option>All Vendors</option>
+                    <option>Smith's Family Butchers</option>
+                    <option>Premium Meat Co.</option>
+                    <option>Organic Farm Meats</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/280/200" alt="Ribeye Steak">
+                </div>
+                <div class="product-details">
+                    <div class="product-name">Ribeye Steak</div>
+                    <div class="product-vendor">Smith's Family Butchers</div>
+                    <div class="product-price">£12.99 per kg</div>
+                    <div class="product-actions">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-rating">
+                            ★★★★★ (24)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/280/200" alt="Free Range Chicken">
+                </div>
+                <div class="product-details">
+                    <div class="product-name">Free Range Chicken</div>
+                    <div class="product-vendor">Organic Farm Meats</div>
+                    <div class="product-price">£8.50 each</div>
+                    <div class="product-actions">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-rating">
+                            ★★★★☆ (18)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/280/200" alt="Premium Lamb Chops">
+                </div>
+                <div class="product-details">
+                    <div class="product-name">Premium Lamb Chops</div>
+                    <div class="product-vendor">Premium Meat Co.</div>
+                    <div class="product-price">£15.99 per kg</div>
+                    <div class="product-actions">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-rating">
+                            ★★★★★ (32)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/280/200" alt="Pork Sausages">
+                </div>
+                <div class="product-details">
+                    <div class="product-name">Homemade Pork Sausages</div>
+                    <div class="product-vendor">Smith's Family Butchers</div>
+                    <div class="product-price">£6.99 per pack</div>
+                    <div class="product-actions">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-rating">
+                            ★★★★☆ (15)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product 5 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="/api/placeholder/280/200" alt="Beef Mince">
+                </div>
+                <div class="product-details">
+                    <div class="product-name">Lean Beef Mince</div>
+                    <div class="product-vendor">Premium Meat Co.</div>
+                    <div class="product-price">£7.50 per 500g</div>
+                    <div class="product-actions">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-rating">
+                            ★★★★☆ (29)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        
+
+    </main>
+
+   
+
+    <!-- Footer -->
+    <div class="separator"></div>
+    <footer>
+        <div class="footer">
+            <div class="footer-section">
+                <div class="footer-logo"><img src="images/logo.png" alt="HuddersKart Logo" style="height: 40px;"></div>
+                <div class="footer-location">Hudderskart</div>
+                <div class="contact-info">
+                    <p><strong>Contact Information</strong></p>
+                    <p>Email: HuddersKart12@gmail.com</p>
+                    <p>Phone: 01555321</p>
+                    <p>Address: Duarbarmarg, Kathmandu</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>LINKS</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Cart</a></li>
+                    <li><a href="#">Login/Register</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Trader</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Return & Refund Policy</a></li>
+                    <li><a href="#">Shipping Information</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Social Media Links</h3>
+                <div class="social-media">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">x</a>
+                    <a href="#" class="social-icon">ig</a>
+                </div>
+
+                <h3 style="margin-top: 20px;">Payment Methods</h3>
+                <div class="payment-methods">
+                    <img src="/api/placeholder/90/35" alt="PayPal" class="payment-icon">
+                    <img src="/api/placeholder/90/35" alt="Stripe" class="payment-icon">
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2025 HUDDERSKART. ALL RIGHTS RESERVED
+        </div>
+    </footer>
+
+    <script>
+          // Mobile Menu Toggle - FIXED SELECTOR
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // Category card click event
+    const categoryCards = document.querySelectorAll('.category-card');
+    categoryCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+            alert(`You clicked on ${category} category. This would navigate to the ${category} page.`);
+        });
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-container input');
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            alert(`Searching for: ${this.value}`);
+            this.value = '';
+        }
+    });
+
+    // Cart functionality
+    const cartIcon = document.querySelector('.cart-icon');
+    const cartSidebar = document.querySelector('.cart-sidebar');
+    const cartOverlay = document.querySelector('.cart-overlay');
+    const closeCart = document.querySelector('.close-cart');
+    let cartCount = 0;
+    
+    if (cartIcon && cartSidebar && cartOverlay && closeCart) {
+        function toggleCart() {
+            cartSidebar.classList.toggle('active');
+            cartOverlay.style.display = cartSidebar.classList.contains('active') ? 'block' : 'none';
+        }
+
+        cartIcon.addEventListener('click', toggleCart);
+        closeCart.addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+    }
+
+    <!-- // Function to update cart count (would be called when items are added)
+    function updateCartCount(count) {
+        cartCount += count;
+        document.querySelector('.cart-count').textContent = cartCount;
+    } -->
+
+    // Dynamic window resize handling
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('active');
+        }
+    });
+});
+   
+
+       
+    </script>
+</body>
+</html>

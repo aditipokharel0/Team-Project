@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - HuddersKart</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        /* Profile Section */
+        .profile-section {
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .profile-heading {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: normal;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            background: #d5c3c1;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            color: white;
+        }
+
+        .profile-avatar:hover .avatar-overlay {
+            opacity: 1;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .info-box {
+            background-color: #222;
+            color: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .profile-bio {
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            max-width: 600px;
+            min-height: 120px;
+            border: 1px solid #ddd;
+        }
+
+        /* Photo Upload Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: black;
+        }
+
+        .upload-btn, .confirm-upload {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        .upload-btn:hover, .confirm-upload:hover {
+            background-color: #45a049;
+        }
+
+        .preview-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            .header {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            .search-container {
+                margin: 10px 0;
+                width: 100%;
+                max-width: 100%;
+
+
+            }
+            
+
+            .user-actions {
+                width: 100%;
+                justify-content: space-around;
+                margin-top: 10px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 0 10px;
+            }
+
+            .footer {
+                grid-template-columns: 1fr;
+            }
+        }
+
+       
+    </style>
+</head>
+<body>
+    <!-- Header with Logo and Search -->
+    <header class="header">
+        <a href="/index.html" class="logo"><img src="images/logo.png" alt="HuddersKart Logo"></a>
+        
+        <div class="search-container">
+            <input type="text" placeholder="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+        <div class="user-actions">
+            <div class="cart-icon">
+                <span>🛒</span>
+                <span class="cart-count">0</span>
+            </div>
+            <a href="/login.html">Login</a>
+            <a href="/register.html">Register</a>
+            <a href="/costumer.html">👤</a>
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="menu-toggle">☰</div>
+        <ul class="nav-links">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/about.html">About Us</a></li>
+            <li><a href="/categories.html">Categories</a></li>
+            <li><a href="#">Become a trader</a></li>
+            <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section class="profile-section">
+            <h1 class="profile-heading">Profile</h1>
+            <div class="profile-avatar" id="avatar-container">
+                <img id="avatar-image" src="/api/placeholder/150/150" alt="Profile Avatar">
+                <div class="avatar-overlay">
+                    <span>📷 Update Photo</span>
+                </div>
+                <input type="file" id="file-upload" class="file-input" accept="image/*">
+            </div>
+            <h2 class="profile-name">LOREM IPSUM</h2>
+            <div class="profile-info">
+                <div class="info-box">Full Name: Name</div>
+                <div class="info-box">Email: XYZ@gmail.com</div>
+                <div class="info-box">Contact: 015559934</div>
+            </div>
+            <div class="profile-bio" id="bio-section">
+                <!-- Bio content will go here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Photo Upload Modal -->
+    <div id="upload-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Upload Profile Photo</h2>
+            <p>Select an image to set as your profile picture</p>
+            <button class="upload-btn" id="trigger-file-select">Choose File</button>
+            <div class="preview-container">
+                <img id="preview-image" class="image-preview" style="display: none;">
+            </div>
+            <button class="confirm-upload" id="confirm-upload" style="display: none;">Save Photo</button>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Footer -->
+    <div class="separator"></div>
+    <footer>
+        <div class="footer">
+            <div class="footer-section">
+                <div class="footer-logo"><img src="images/logo.png" alt="HuddersKart Logo" style="height: 40px;"></div>
+                <div class="footer-location">Hudderskart</div>
+                <div class="contact-info">
+                    <p><strong>Contact Information</strong></p>
+                    <p>Email: HuddersKart12@gmail.com</p>
+                    <p>Phone: 01555321</p>
+                    <p>Address: Duarbarmarg, Kathmandu</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>LINKS</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Cart</a></li>
+                    <li><a href="#">Login/Register</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Trader</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Return & Refund Policy</a></li>
+                    <li><a href="#">Shipping Information</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Social Media Links</h3>
+                <div class="social-media">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">x</a>
+                    <a href="#" class="social-icon">ig</a>
+                </div>
+
+                <h3 style="margin-top: 20px;">Payment Methods</h3>
+                <div class="payment-methods">
+                    <img src="/api/placeholder/90/35" alt="PayPal" class="payment-icon">
+                    <img src="/api/placeholder/90/35" alt="Stripe" class="payment-icon">
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2025 HUDDERSKART. ALL RIGHTS RESERVED
+        </div>
+    </footer>
+
+
+    <script>
+
+        // Mobile Menu Toggle - FIXED SELECTOR
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // Category card click event
+    const categoryCards = document.querySelectorAll('.category-card');
+    categoryCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+            alert(`You clicked on ${category} category. This would navigate to the ${category} page.`);
+        });
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-container input');
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            alert(`Searching for: ${this.value}`);
+            this.value = '';
+        }
+    });
+
+    // Cart functionality
+    const cartIcon = document.querySelector('.cart-icon');
+    const cartSidebar = document.querySelector('.cart-sidebar');
+    const cartOverlay = document.querySelector('.cart-overlay');
+    const closeCart = document.querySelector('.close-cart');
+    let cartCount = 0;
+    
+    if (cartIcon && cartSidebar && cartOverlay && closeCart) {
+        function toggleCart() {
+            cartSidebar.classList.toggle('active');
+            cartOverlay.style.display = cartSidebar.classList.contains('active') ? 'block' : 'none';
+        }
+
+        cartIcon.addEventListener('click', toggleCart);
+        closeCart.addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+    }
+
+    // Function to update cart count (would be called when items are added)
+    function updateCartCount(count) {
+        cartCount += count;
+        document.querySelector('.cart-count').textContent = cartCount;
+    }
+
+    // Dynamic window resize handling
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('active');
+        }
+    });
+});
+
+        
+
+        // Sample data for demonstration
+        const userData = {
+            name: "Lorem Ips",
+            email: "XYZ@gmail.com",
+            contact: "015559934",
+            bio: "Welcome to my profile! This is where I can share information about myself and my interests."
+        };
+
+        // Function to populate user data
+        function populateUserData() {
+            // Display bio
+            document.getElementById('bio-section').textContent = userData.bio;
+        }
+
+        // Simple cart functionality
+        let cartItems = 0;
+        
+        function updateCart() {
+            document.getElementById('cart-count').textContent = cartItems;
+        }
+
+        // Photo upload functionality
+        const modal = document.getElementById('upload-modal');
+        const avatarContainer = document.getElementById('avatar-container');
+        const fileInput = document.getElementById('file-upload');
+        const triggerFileSelect = document.getElementById('trigger-file-select');
+        const previewImage = document.getElementById('preview-image');
+        const confirmUpload = document.getElementById('confirm-upload');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const avatarImage = document.getElementById('avatar-image');
+        const notification = document.getElementById('notification');
+
+        // Open modal when avatar is clicked
+        avatarContainer.addEventListener('click', function() {
+            modal.style.display = 'block';
+        });
+
+        // Close modal when X is clicked
+        closeModalBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Trigger file input when button is clicked
+        triggerFileSelect.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // Show preview when file is selected
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    confirmUpload.style.display = 'inline-block';
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Confirm photo upload
+        confirmUpload.addEventListener('click', function() {
+            // Update avatar with new image
+            avatarImage.src = previewImage.src;
+            
+            // Close modal
+            modal.style.display = 'none';
+            
+            // Show success notification
+            showNotification('Profile photo updated successfully!');
+        });
+
+        // Show notification function
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            // Hide after 3 seconds
+            setTimeout(function() {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateUserData();
+            updateCart();
+        });
+
+        // Responsive menu toggle (for smaller screens)
+        function toggleMenu() {
+            const nav = document.querySelector('.nav-menu');
+            nav.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
